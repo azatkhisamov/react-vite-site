@@ -1,0 +1,11 @@
+.usersWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: aqua;
+    gap: 15px;
+}
+
+.user {
+    padding: 5px;
+    border: 1px solid black;
+}

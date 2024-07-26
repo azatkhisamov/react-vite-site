@@ -1,0 +1,18 @@
+.postWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    background-color: bisque;
+}
+
+.post {
+    text-align: center;
+    padding: 5px;
+    background-color: aquamarine;
+}
+
+.bntLike {
+    padding: 5px;
+    background-color: blueviolet;
+    color: white;
+}
