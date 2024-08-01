@@ -135,13 +135,9 @@ export const {
     selectById: selectOnePost,
 } = postsAdapter.getSelectors((state: AppState) => state.posts);
 export const selectPostsForUser = createSelector(
-    [selectAllPosts, (state, userId) => userId],
-    (posts, userId) => posts.filter(post => post.userId === userId)
+    [selectAllPosts, (state: AppState, userId) => state.users.entities[userId]],
+    (posts, user) => posts.filter(post => post.userId === user.id)
 )
 export const selectStatus = (state: AppState) => state.posts.status;
-// export const selectPosts = (state: AppState) => state.posts.posts;
-// export const selectPostById = (state: AppState) => state.posts.viewedPost;
-// export const selectCommentsForPosts = createSelector([selectPosts, (state, postId) => postId],
-// (posts, postId) => posts.filter(post => post.id === postId))
 
 export default PostsSlice.reducer;

@@ -47,8 +47,8 @@ export const {
     selectById: selectOneTodo,
 } = todosAdapter.getSelectors((state: AppState) => state.todos);
 export const selectTodosForUser = createSelector(
-    [selectAllTodos, (state, userId) => userId],
-    (todos, userId) => todos.filter(todo => todo.userId === userId)
+    [selectAllTodos, (state: AppState, userId) => state.users.entities[userId]],
+    (todos, user) => todos.filter(todo => todo.userId === user.id)
 )
 export const {completeTodo, deleteTodo} = todosSlice.actions
 export default todosSlice.reducer;

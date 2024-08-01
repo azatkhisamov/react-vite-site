@@ -69,8 +69,8 @@ export const {
     selectById: selectAlbumById,
 } = albumAdapter.getSelectors((state: AppState) => state.albums);
 export const selectAlbumsForUsers = createSelector(
-    [selectAlbums, (state, userId) => userId],
-    (albums, userId) => albums.filter(album => album.userId === userId)
+    [selectAlbums, (state: AppState, userId) => state.users.entities[userId]],
+    (albums, user) => albums.filter(album => album.userId === user.id)
 )
 export const albumsStatus = (state: AppState) => state.albums.status;
 export const selectAlbumStatus = (state: AppState) => state.albums.status;

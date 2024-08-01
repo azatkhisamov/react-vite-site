@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../app/store'
+import { AppState, useAppDispatch } from '../../app/store'
 import { useSelector } from 'react-redux';
 import { albumsStatus, fetchAlbumsForUser, selectAlbumsForUsers } from './albumsSlice';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ type PropsType = {
 
 export default function AlbumsForUser({ userId }: PropsType) {
     const dispatch = useAppDispatch();
-    const albums = useSelector(state => selectAlbumsForUsers(state, userId));
+    const albums = useSelector((state: AppState)  => selectAlbumsForUsers(state, userId));
     const globalStatus = useSelector(albumsStatus);
     const [status, setStatus] = useState<'idle' | 'loading' | 'succeeded' | 'error'>(globalStatus);
 

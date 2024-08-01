@@ -58,7 +58,7 @@ const commentsSlice = createSlice({
 export const { addComment } = commentsSlice.actions;
 const {selectAll} = commentsAdapter.getSelectors((state: AppState) => state.comments);
 export const selectCommentsForPost = createSelector(
-    [selectAll, (state, postId) => postId], 
-    (comments, postId) => comments.filter(comment => comment.postId === postId)
+    [selectAll, (state: AppState, postId) => state.posts.entities[postId]], 
+    (comments, post) => comments.filter(comment => comment.postId === post.id)
 )
 export default commentsSlice.reducer;

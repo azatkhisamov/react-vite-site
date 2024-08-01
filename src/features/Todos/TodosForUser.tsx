@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAppDispatch } from '../../app/store'
+import { AppState, useAppDispatch } from '../../app/store'
 import { useSelector } from 'react-redux';
 import { completeTodo, deleteTodo, fetchTodos, selectTodosForUser } from './todosSlice';
 import { selectAuthData } from '../Auth/authSlice';
@@ -11,7 +11,7 @@ type PropsType = {
 
 export default function TodosForUser({ userId }: PropsType) {
     const dispatch = useAppDispatch();
-    const todos = useSelector(state => selectTodosForUser(state, userId));
+    const todos = useSelector((state: AppState) => selectTodosForUser(state, userId));
     const authData = useSelector(selectAuthData);
     const [status, setStatus] = useState<'idle' | 'succeeded' | 'loading' | 'error'>('idle');
 

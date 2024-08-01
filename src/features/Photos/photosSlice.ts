@@ -43,8 +43,8 @@ export const {
     selectById: selectPhoto,
 } = photosAdapter.getSelectors((state: AppState) => state.photos);
 export const selectPhotosForAlbum = createSelector(
-    [selectPhotos, (state, albumId) => albumId],
-    (photos, albumId) => photos.filter(photo => photo.albumId === albumId)
+    [selectPhotos, (state: AppState, albumId) => state.albums.entities[albumId]],
+    (photos, album) => photos.filter(photo => photo.albumId === album.id)
 )
 export default photosSlice.reducer;
 
