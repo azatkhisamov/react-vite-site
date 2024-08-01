@@ -1,34 +1,50 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom"
-import { useAppDispatch } from "../../app/store";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"
+import { AppState, useAppDispatch } from "../../app/store";
 import { useSelector } from "react-redux";
-import { fetchViewedPost, incrementLikes, selectPostById } from "./PostsSlice";
-import { LikeTwoTone } from '@ant-design/icons';
-import Comments from "../Comments/Comments";
+import { fetchOnePost, selectOnePost, selectStatus } from "./PostsSlice";
+import Posts from "./Posts";
+import PostsLoading from "./components/PostsLoading";
+import { Button, Result } from "antd";
+import { Helmet } from "react-helmet";
 
 export default function PostPage() {
     const { postId } = useParams();
     const dispatch = useAppDispatch();
-    const post = useSelector(selectPostById);
-
+    const post = useSelector((state: AppState) => selectOnePost(state, postId!));
+    const globalStatus = useSelector(selectStatus);
+    const navigate = useNavigate();
+    const [status, setStatus] = useState<'idle' | 'loading' | 'succeeded' | 'error'>(post ? 'succeeded' : globalStatus);
     useEffect(() => {
-        dispatch(fetchViewedPost(+postId!));
-    }, [dispatch, postId])
+        const fetchData = async () => {
+            if (status === 'idle') {
+                setStatus('loading');
+                const result = await dispatch(fetchOnePost(postId!)).unwrap();
+                result instanceof Object ? setStatus('succeeded') : setStatus('error');
+            }
+        }
 
-    const content = post &&
-        <div>
-            <h5>{post.title}</h5>
-            <p>{post.body}</p>
-            <LikeTwoTone onClick={() => dispatch(incrementLikes({typePost:"viewed", id: post.id}))} />{post.likes}
-        </div>
+        fetchData();
+    }, [dispatch, postId, status])
+
+    if (status === "error") {
+        return (<Result
+            status="404"
+            title="404"
+            subTitle="Sorry, the page you visited does not exist."
+            extra={<Button type="primary" onClick={() => navigate('/')}>Back Home</Button>}
+        />)
+    }
     return (
         <>
-            <div>
-                PostPage
-            </div>
-            <div>{content}</div>
-            <div><Comments postId={postId}/></div>
+            {status === 'loading' && <PostsLoading />}
+            {(status === 'succeeded' && post) &&
+                <>
+                    <Helmet>
+                        <title>{post.title}</title>
+                    </Helmet>
+                    <Posts posts={[post]} countPostsType="one" />
+                </>}
         </>
-
     )
 }

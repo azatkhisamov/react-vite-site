@@ -1,49 +1,43 @@
-import {  useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { addComment, fetchComments, selectComments } from './commentsSlice'
-import { useAppDispatch } from '../../app/store'
-import { Button } from 'antd'
+import { AppState } from '../../app/store'
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, List, } from 'antd';
+import { Link } from 'react-router-dom';
+import {  selectCommentsForPost } from './commentsSlice';
+import { useSelector } from 'react-redux';
+import { selectAuthData } from '../Auth/authSlice';
+import AddComment from './AddComment';
 
 type PropsType = {
-    postId: string | undefined
+    postId: string | undefined | number,
 }
 
 export default function Comments({ postId }: PropsType) {
-    const [text, setText] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const comments = useSelector(selectComments);
-    const dispatch = useAppDispatch();
-    
-    useEffect(() => {
-        dispatch(fetchComments(+postId!))
-    }, [dispatch, postId])
+    const authData = useSelector(selectAuthData);
+    const comments = useSelector((state: AppState) => selectCommentsForPost(state, +postId!))
 
-    const onSubmit = (postId: number , name: string, email: string, body: string) => {
-        dispatch(addComment({postId ,name, email, body}));
-        setText('');
-        setName('');
-        setEmail('');
-    }
-    
-    const content = comments && comments.map(comment => (
-    <div key={comment.id}>
-        <h6>{comment.name} - {comment.email}</h6>
-        <p>{comment.body}</p>
-    </div>))
-    // debugger
-    return(
-    <>
-        <div>Comments:</div>
-        <div>{content}</div>
-        <input type="name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
-        <div>
-            <Button onClick={() => onSubmit(+postId!, name, email, text)} type='primary'>Send</Button>
-            {/* <button onClick={() => onSubmit(+postId!, name, email, text)}></button> */}
+    return (
+        <div style={{ width: '600px', margin: '5px auto' }}>    
+            <List
+                itemLayout="vertical"
+                size="small"
+                dataSource={comments}
+                bordered={true}
+                grid={{ gutter: 16, column: 1 }}
+                renderItem={(item) => (
+                    <List.Item
+                        key={item.id}
+                    >
+                        <List.Item.Meta
+                            avatar={<Avatar icon={<UserOutlined size={64}/>} />}
+                            title={<Link to={`/users/${item.name}`}>{item.name}</Link>}
+                            description={item.email}
+                        />
+                        {item.body}
+                    </List.Item>
+                )}
+            />
+            {(authData.isAuth && comments.length !== 0) && <AddComment authData={authData} postId={postId}/>}
         </div>
-    </>
 
     )
 }

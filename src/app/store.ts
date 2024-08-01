@@ -2,6 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "../features/Users/usersSlice.ts";
 import postsReducer from "../features/Posts/PostsSlice.ts";
 import commentsReducer from "../features/Comments/commentsSlice.ts";
+import albumsReducer from "../features/Albums/albumsSlice.ts";
+import photosReducer from "../features/Photos/photosSlice.ts"
+import authReducer from "../features/Auth/authSlice.ts";
+import todosReducer from "../features/Todos/todosSlice.ts";
 import { useDispatch } from "react-redux";
 
 const store = configureStore({
@@ -9,6 +13,10 @@ const store = configureStore({
         users: userReducer,
         posts: postsReducer,
         comments: commentsReducer,
+        albums: albumsReducer,
+        photos: photosReducer,
+        todos: todosReducer,
+        auth: authReducer,
     }
 })
 

@@ -1,40 +1,43 @@
-import { createAsyncThunk, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit"
-import axios from "axios"
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit"
 import { AppState } from "../../app/store";
+import { requestCommentsForPost } from "../api/api";
+import { sub } from "date-fns";
+import { getRandomInt } from "../helpers/helpers";
 
-const URL_BASE = "https://jsonplaceholder.typicode.com/";
-
-type commentsType = {
+type commentType = {
     postId: number,
     id: number | string,
     name: string,
     email: string,
     body: string,
-}
-const initialState = {
-    comments: [] as commentsType[]
+    date?: string,
 }
 
-export const fetchComments = createAsyncThunk<commentsType[], number, {rejectedMeta: unknown}>(
-    'comments/fetchComments', async (postId: number) => {
-        const response = await axios.get(`${URL_BASE}comments?postId=${postId}`);
-        return response.data;
+export const fetchComments = createAsyncThunk<commentType[], number | string, { rejectedMeta: unknown }>(
+    'comments/fetchComments',
+    async (postId: number | string) => {
+        return await requestCommentsForPost(postId);
     }
 )
+const commentsAdapter = createEntityAdapter({
+    selectId: (comment: commentType) => comment.id,
+    sortComparer: (a: commentType, b: commentType) => b.date!.localeCompare(a.date!),
+})
+const initialState = commentsAdapter.getInitialState();
 
 const commentsSlice = createSlice({
     name: 'comments',
     initialState,
     reducers: {
         addComment: {
-            reducer: (state, action: PayloadAction<commentsType>) => {
-                state.comments.push(action.payload);
+            reducer: (state, action: PayloadAction<commentType>) => {
+                commentsAdapter.addOne(state, action.payload);
             },
-            prepare: (body: Omit<commentsType, 'id'>) => {
-                // debugger
+            prepare: (body: Omit<commentType, 'id'>) => {
                 return {
                     payload: {
                         id: nanoid(),
+                        date: new Date().toISOString(),
                         ...body
                     }
                 }
@@ -43,11 +46,19 @@ const commentsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchComments.fulfilled, (state, action) => {
-            state.comments = state.comments.concat(action.payload);
+            action.payload.map((comment) => {
+                comment.date = sub(new Date(), {minutes: getRandomInt(100)}).toISOString();
+            })
+            commentsAdapter.addMany(state, action.payload)
+            // state.comments = state.comments.concat(action.payload);
         })
     }
 })
 
-export const {addComment} = commentsSlice.actions;
-export const selectComments = (state: AppState) => state.comments.comments;
+export const { addComment } = commentsSlice.actions;
+const {selectAll} = commentsAdapter.getSelectors((state: AppState) => state.comments);
+export const selectCommentsForPost = createSelector(
+    [selectAll, (state, postId) => postId], 
+    (comments, postId) => comments.filter(comment => comment.postId === postId)
+)
 export default commentsSlice.reducer;
