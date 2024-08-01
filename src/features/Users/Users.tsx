@@ -30,7 +30,7 @@ const Users = () => {
                 <Flex gap={10} justify='center' align='center' wrap>
                     {users.map(user => (
                         <Card key={user.id} title={user.name} hoverable={true}
-                            extra={<Link to={`/users/${user.id}`}>More</Link>} style={{ width: '30%' }}
+                            extra={<Link to={`/users/${user.id}`}>More</Link>} style={{ width: 300 }}
                             actions={[<SubscribeButton authData={authData} userId={user.id} userFriend={!!user.friend} />]}>
                             <p>Email: {user.email}</p>
                             <p>Username: {user.username}</p>

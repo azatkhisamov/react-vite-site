@@ -48,7 +48,7 @@ export default function Albums({ albums, albumsOnPage }: PropsType) {
                     </div>
                 }
                 dataSource={list}
-                grid={{ gutter: 0, column: 3 }}
+                grid={{ gutter: 0, lg: 3, md: 1, xl: 4 }}
                 renderItem={(item) => (
                     <List.Item>
                         <Card title={item.title}>

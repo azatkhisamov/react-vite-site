@@ -45,7 +45,7 @@ function UserPage() {
           <title>{user?.name}</title>
         </Helmet>
         <Divider orientation="left">Users info</Divider>
-        <Descriptions style={{ marginBottom: '50px' }} extra={authData.id! !== user.id &&
+        <Descriptions column={1} style={{ marginBottom: '50px' }} extra={authData.id! !== user.id &&
           authData.isAuth && <SubscribeButton authData={authData} userId={user.id}
             userFriend={!!user.friend} />}>
           {Object.entries(user).map(([key, value]) => {
@@ -64,10 +64,10 @@ function UserPage() {
         </Descriptions>
         <AlbumsForUser userId={+userId!} />
         <Row gutter={20}>
-          <Col span={8}>
+          <Col md={24} lg={8}>
             <TodosForUser userId={+userId!} />
           </Col>
-          <Col span={16}>
+          <Col md={24} lg={16}>
             <UserPosts userId={userId} />
           </Col>
         </Row>
