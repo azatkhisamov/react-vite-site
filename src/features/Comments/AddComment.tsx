@@ -18,11 +18,11 @@ export default function AddComment({ authData, postId }: PropsType) {
     }
 
     return (
-        <Flex vertical gap={15} justify='center' align='center' style={{ marginTop: '5px' }}>
-            <Flex vertical style={{ width: 600 }}>
+        <Flex vertical gap={15} justify='center'  style={{ marginTop: '5px', width: '100%' }}>
+            <Flex vertical>
                 <div>
-                    {/* <Typography.Title level={5}>Comment:</Typography.Title> */}
-                    <Input.TextArea rows={5} variant='filled' value={text} onChange={(e) => setText(e.target.value)}
+                    <Input.TextArea placeholder='Write your comment' 
+                    rows={5} variant='filled' value={text} onChange={(e) => setText(e.target.value)}
                         style={{ resize: "none" }} />
                 </div>
             </Flex>

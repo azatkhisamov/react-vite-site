@@ -44,7 +44,7 @@ function UserPage() {
         <Helmet>
           <title>{user?.name}</title>
         </Helmet>
-        <Divider orientation="left">Users info</Divider>
+        <Divider orientation="left">User info</Divider>
         <Descriptions column={1} style={{ marginBottom: '50px' }} extra={authData.id! !== user.id &&
           authData.isAuth && <SubscribeButton authData={authData} userId={user.id}
             userFriend={!!user.friend} />}>

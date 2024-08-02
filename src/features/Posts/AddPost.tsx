@@ -37,7 +37,7 @@ export default function AddPost() {
             <Helmet>
                 <title>Add post</title>
             </Helmet>
-            <Flex vertical style={{ width: '500px' }}>
+            <Flex vertical style={{ width: '80%' }}>
                 <div>
                     <Typography.Title level={5}>Title:</Typography.Title>
                     <Input value={title} onChange={(e) => setTitle(e.target.value)} />

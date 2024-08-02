@@ -22,12 +22,23 @@ export default function TodosForUser({ userId }: PropsType) {
             setStatus('succeeded');
         }
     }, [dispatch, userId, status])
+
+    if (status === 'succeeded' && todos.length === 0) {
+        return (
+            <>
+                <Divider orientation="left">
+                    User todos
+                </Divider>
+                <Alert message="No todos" type="warning" />
+            </>)
+    }
+
     return (
         <>
             {status === 'loading' && <div>Loading</div>}
             {status === 'succeeded' &&
                 <Flex vertical gap={15}>
-                    <Divider orientation="left">Users todos</Divider>
+                    <Divider orientation="left">User todos</Divider>
                     {todos.map(todo =>
                         !todo.completed ?
                             <Alert

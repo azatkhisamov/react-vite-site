@@ -6,7 +6,7 @@ import store from './app/store.ts'
 import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename='react-vite-site/'>
     <Provider store={store}>
       <App />
     </Provider>

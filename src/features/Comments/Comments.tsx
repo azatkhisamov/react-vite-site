@@ -1,6 +1,6 @@
 import { AppState } from '../../app/store'
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, List, } from 'antd';
+import { Avatar, List, Typography, } from 'antd';
 import { Link } from 'react-router-dom';
 import {  selectCommentsForPost } from './commentsSlice';
 import { useSelector } from 'react-redux';
@@ -16,7 +16,8 @@ export default function Comments({ postId }: PropsType) {
     const comments = useSelector((state: AppState) => selectCommentsForPost(state, +postId!))
 
     return (
-        <div style={{ width: '600px', margin: '5px auto' }}>    
+        <div style={{ width: '80%', margin: '5px auto' }}>    
+            <Typography.Title level={5}>Comments:</Typography.Title>
             <List
                 itemLayout="vertical"
                 size="small"

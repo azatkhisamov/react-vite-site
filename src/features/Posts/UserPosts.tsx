@@ -4,7 +4,7 @@ import { AppState, useAppDispatch } from '../../app/store';
 import { fetchPostsForUser, selectPostsForUser, selectStatus } from './PostsSlice';
 import Posts from './Posts';
 import PostsLoading from './components/PostsLoading';
-import { Divider } from 'antd';
+import { Alert, Divider } from 'antd';
 
 type propsType = {
     userId: string | undefined
@@ -24,11 +24,20 @@ export default function UserPosts({ userId }: propsType) {
         }
     }, [dispatch, userId, globalStatus, status])
 
+    if (status === 'succeeded' && posts.length === 0) {
+        return (<>
+            <Divider orientation="left">
+                User posts
+            </Divider>
+            <Alert message="No posts" type="warning" />
+        </>)
+    }
+
     return (<>
         {status === 'loading' && <PostsLoading />}
         {status === 'succeeded' &&
             <div>
-                <Divider orientation="left">Users Posts</Divider>
+                <Divider orientation="left">User Posts</Divider>
                 <Posts posts={posts} countPostsType='many' />
             </div>}
     </>

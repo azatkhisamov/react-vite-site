@@ -5,6 +5,7 @@ import Loading from '../features/components/Loading';
 import Sidebar from './Sidebar';
 import Result404 from '../features/components/Result404';
 import MainPage from './MainPage';
+import styles from "./App.module.css";
 
 const Users = lazy(() => import('../features/Users/Users'));
 const UserPage = lazy(() => import('../features/Users/UserPage'));
@@ -35,11 +36,11 @@ function App() {
     }}>
       <Layout>
         <Sidebar/>
-        <Layout style={{ marginLeft: 200 }}>
+        <Layout className={styles.layoutWidth}>
           <Content
             style={{
-              margin: '24px 48px',
-              padding: 40,
+              margin: '24px 28px',
+              padding: 30,
               minHeight: '88vh',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

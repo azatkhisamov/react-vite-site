@@ -34,21 +34,13 @@ export default function EditPost() {
 
     const canSave = [title, body].every(Boolean);
 
-    // if ((post === undefined || !authData.isAuth) && status === 'succeeded') {
-    //     return <Navigate to={'/'} />
-    // }
-
-    // if ((post === undefined || !authData.isAuth) && status === 'succeeded') {
-    //     return <Navigate to={'/'} />
-    // }
-
     return ((post === undefined && status === 'succeeded') ? <Result404 /> :
         (!authData.isAuth) ? <Result403/> :
         <Flex vertical gap={15} justify='center' align='center'>
             <Helmet>
                 <title>Edit post {post.title}</title>
             </Helmet>
-            <Flex vertical style={{width: '500px'}}>
+            <Flex vertical style={{width: '80%'}}>
                 <div>
                     <Typography.Title level={5}>Title:</Typography.Title>
                     <Input required value={title} onChange={(e) => setTitle(e.target.value)} />

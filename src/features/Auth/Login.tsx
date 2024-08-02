@@ -18,7 +18,7 @@ export default function Login() {
             <Helmet>
                 <title>Login</title>
             </Helmet>
-            <Flex vertical style={{ width: '500px' }}>
+            <Flex vertical style={{ width: '80%' }}>
                 <Typography.Title level={5}>
                     Email:
                 </Typography.Title>

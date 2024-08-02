@@ -1,0 +1,9 @@
+.layoutWidth {
+  margin-left: 180px;
+}
+
+@media (max-width: 768px) {
+  .layoutWidth {
+    margin-left: 50px;
+  }  
+}

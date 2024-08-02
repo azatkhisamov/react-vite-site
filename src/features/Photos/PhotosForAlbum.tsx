@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AppState, useAppDispatch } from '../../app/store';
 import { useSelector } from 'react-redux';
 import { fetchPhotos, selectPhotosForAlbum } from './photosSlice';
-import { Flex, Image, Skeleton } from 'antd';
+import { Image, List, Skeleton } from 'antd';
 
 type PropsType = {
     albumId: number
@@ -32,10 +32,15 @@ export default function PhotosForAlbum({ albumId }: PropsType) {
                     <Skeleton.Image active />
                 </>}
             {status === 'succeeded' &&
-                <Flex gap={15} justify='space-around' align='center' wrap>
-                    {photos.map(photo =>
-                        <Image alt={photo.title} src={photo.thumbnailUrl} key={photo.id} width={'30%'} />)}
-                </Flex>}
+                <List grid={{ gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}
+                    dataSource={photos} style={{margin: '0 auto'}} renderItem={(item) => (
+                        <List.Item>
+                            <Image alt={item.title} src={item.thumbnailUrl} key={item.id} />
+                        </List.Item>
+                    )}>
+
+                </List>
+            }
         </>
     )
 }
