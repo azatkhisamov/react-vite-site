@@ -1,30 +1,40 @@
-# React + TypeScript + Vite
+# Pet project 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание проекта:
+Это одностраничное приложение (SPA), созданное с использованием следующих технологий:
 
-Currently, two official plugins are available:
+* **React:** Фреймворк для создания пользовательских интерфейсов.
+* **Redux Toolkit:** Инструментарий для управления состоянием приложения.
+* **Vite:** Быстрый инструмент сборки для современных веб-проектов.
+* **TypeScript:** Язык программирования с системой статической типизации.
+* **Ant Design:** Библиотека пользовательского интерфейса для React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Функционал:
 
-## Expanding the ESLint configuration
+- Получение данных: Приложение взаимодействует с внешним REST API (https://jsonplaceholder.typicode.com) для получения данных о пользователях, их альбомах, постах и задачах (todos).
+- Аутентификация: Реализована простая аутентификация пользователей по электронной почте.
+- Пользовательский интерфейс: Создан интуитивно понятный интерфейс с использованием компонентов Ant Design.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Структура проекта:
+* **app:** Содержит общие компоненты приложения и главный стор.
+* **features:** Содержит компоненты, связанные с конкретными функциями приложения (например, страница пользователей, страница альбомов).
+* **App.tsx:** Корневой компонент приложения.
+* **index.tsx:** Точка входа приложения.
+* **vite.config.ts:** Конфигурационный файл для Vite.
+* **package.json:** Файл с зависимостями проекта.
 
-- Configure the top-level `parserOptions` property like this:
+## Запуск приложения:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+**1. Установка зависимостей:**
+npm install
+**2. Запуск в режиме разработки::**
+npm run dev
+**3. Сборка для продакшена::**
+npm run build
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Дополнительные замечания:
+
+- TypeScript: В проекте используется TypeScript для обеспечения более безопасного и поддерживаемого кода.
+- Redux Toolkit: Redux Toolkit упрощает работу с Redux, предоставляя удобные инструменты для создания слайсов, создания действий и управления состоянием.
+- Ant Design: Ant Design предоставляет богатый набор компонентов для создания профессиональных пользовательских интерфейсов.
+- Vite: Vite обеспечивает быструю горячую перезагрузку и оптимизированную сборку для продакшена.
